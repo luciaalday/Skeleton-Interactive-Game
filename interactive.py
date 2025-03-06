@@ -43,7 +43,7 @@ def create_window():
     root.title('Game')
     root.geometry('700x600')
 
-    img = Image.open('SkeletonJavalina\desert-museum-photo.jpg')
+    img = Image.open('desert-museum-photo.jpg')
     img = ImageTk.PhotoImage(image=img, master=root)
 
     img_label = Label(root, image=img)
