@@ -172,6 +172,7 @@ class Event:
         phrase = "Difficulty: "+ self._difficulty + "\n"
         phrase += self.event_name + "\n"
         phrase += "Severity: " + self.severity
+        return phrase
 
 
 
