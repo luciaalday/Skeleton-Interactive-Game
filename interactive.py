@@ -184,7 +184,8 @@ def create_window():
     root.title('Game')
     root.geometry('700x600')
 
-    img = Image.open('./desert-museum-photo.jpg').convert('RGBA')
+    #img = Image.open('./desert-museum-photo.jpg').convert('RGBA')
+    img = Image.open('./Desert Museum Announcement.png').convert('RGBA')
     img = ImageTk.PhotoImage(image=img, master=root)
 
     img_label = Label(root, image=img)
