@@ -141,6 +141,7 @@ class Animal:
         events = []
         for key, value in JAVELINA_EVENTS.items():
             events.append(Event(key,value))
+        print("hello")
         return events
 
 
