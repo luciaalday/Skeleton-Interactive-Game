@@ -8,7 +8,9 @@ from PIL import Image, ImageTk
 
 # what if we do one list of severities so the amount is the same for each animal
 # and then we each animal with its own list of prompts
-SNAKE_EVENTS = {"basic prompt": "severity (integer)"}
+
+# EVENTS = {"basic prompt": "severity (integer)"}
+SNAKE_EVENTS = {}
 OWL_EVENTS = {}
 COYOTE_EVENTS = {}
 SCORPION_EVENTS = {}
@@ -30,22 +32,23 @@ class Player:
     
     def set_vals(self):
         if self.animal_name == "Rattlesnake":
-            self.animal = Animal("Rattlenake")
+            imagepath = './snake.jpg'
+            self.animal = Animal("Rattlenake", imagepath)
             self.events = self.animal.build_snake_events() # events are TBD
         elif self.animal_name == "Owl":
-            imagepath = ''
+            imagepath = './owl.jpg'
             self.animal = Animal("Owl", imagepath)
             self.events = self.animal.build_owl_events()
         elif self.animal_name == "Coyote":
-            imagepath = ''
+            imagepath = './coyote.jpg'
             self.animal = Animal("Coyote", imagepath)
             self.events = self.animal.build_coyote_events()
         elif self.animal_name == "Scorpion":
-            imagepath = ''
+            imagepath = './scorpion.jpg'
             self.animal = Animal("Scorpion", imagepath)
             self.events = self.animal.build_scorpion_events()
         elif self.animal_name == "Javelina":
-            imagepath = ''
+            imagepath = './javalina.jpg'
             self.animal = Animal("Javelina", imagepath)
             self.events = self.animal.build_javelina_events()
         
@@ -183,7 +186,7 @@ class Event:
     def __str__(self):
         phrase = "Difficulty: "+ self._difficulty + "\n"
         phrase += self.event_name + "\n"
-        phrase += "Severity: " + self.severity
+        phrase += "Severity: " + str(self.severity)
         return phrase
 
 # health bar shows proportions not the values, show number of lives at the bottom of the screen
@@ -220,9 +223,9 @@ def create_window():
     # rattlesnake
     snake_entry = Radiobutton(root, text='Rattlesnake', variable=animal_entry, value='Rattlesnake')
     snake_entry.grid(row=3, column=0, sticky='w', padx=20)
-    # javalina
-    javalina_entry = Radiobutton(root, text='Javalina', variable=animal_entry, value='Javalina')
-    javalina_entry.grid(row=4, column=0, sticky='w', padx=20)
+    # javelina
+    javelina_entry = Radiobutton(root, text='Javelina', variable=animal_entry, value='Javelina')
+    javelina_entry.grid(row=4, column=0, sticky='w', padx=20)
     # coyote
     coyote_entry = Radiobutton(root, text='Coyote', variable=animal_entry, value='Coyote')
     coyote_entry.grid(row=5, column=0, sticky='w', padx=20)
@@ -257,28 +260,36 @@ def create_window():
         PLAYER.difficulty = difficulty_entry.get()
 
     # start
-    start_button = Button(text='Start Game!', command=lambda:[collect_info(), PLAYER.set_vals(), root.destroy(), show_stats()])
+    start_button = Button(text='Start Game!', command=lambda:[collect_info(), PLAYER.set_vals(), root.destroy(), show_stats(0)])
     start_button.grid(row=7, column=1, pady=50, padx=100)
 
     root.mainloop()
 
-def show_stats():
+def show_stats(n):
     root2 = Tk()
     root2.title('Player Stats')
     root2.geometry('300x300')
 
+    # show animal background image
+    img2 = Image.open(PLAYER.animal.filename).convert('RGBA')
+    img2.thumbnail((500, 500))
+    img2 = ImageTk.PhotoImage(image=img2, master=root2)
+    img_label = Label(root2, image=img2)
+    img_label.place(x=0, y=0, relheight=1, relwidth=1)
+
+
     # show selection
     animal_label = Label(root2, text=(PLAYER.animal_name+' '+PLAYER.name))
-    animal_label.grid(column=0, row=1, padx=50, pady=20, sticky='ew')
+    animal_label.grid(column=0, row=1, padx=200, pady=20, sticky='ew')
 
-    health_label = Label(root2, text=(PLAYER.lives+' lives remaining'))
-    health_label.grid(column=0, row=2, padx=50, pady=20, sticky='ew')
+    health_label = Label(root2, text=(str(PLAYER.lives)+' lives remaining'))
+    health_label.grid(column=0, row=2, padx=200, pady=20, sticky='ew')
 
-    points_label = Label(root2, text=(PLAYER.points+' points accrued'))
-    points_label.grid(column=0, row=3, padx=50, pady=20, sticky='ew')
+    points_label = Label(root2, text=(str(PLAYER.points)+' points accrued'))
+    points_label.grid(column=0, row=3, padx=200, pady=20, sticky='ew')
 
-    continue_button = Button(root2, text='Continue', command=lambda:start_round(0))
-    continue_button.grid(column=0, row=6, padx=60, pady=60)
+    continue_button = Button(root2, text='Continue', command=lambda:[root2.destroy(), start_round(n+1)])
+    continue_button.grid(column=0, row=6, padx=200, pady=60)
 
     root2.mainloop()
 
@@ -290,7 +301,6 @@ def start_round(n):
     root1 = Tk()
     root1.title('Round '+ str(n+1))
     root1.geometry('700x600')
-
 
     root1.mainloop()
 
