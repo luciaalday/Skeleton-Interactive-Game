@@ -6,11 +6,14 @@ import tkinter as tk
 from tkinter import *
 from PIL import Image, ImageTk
 
+# what if we do one list of severities so the amount is the same for each animal
+# and then we each animal with its own list of prompts
 SNAKE_EVENTS = {"basic prompt": "severity (integer)"}
 OWL_EVENTS = {}
 COYOTE_EVENTS = {}
 SCORPION_EVENTS = {}
 JAVELINA_EVENTS = {}
+MAX_ROUNDS = 6      # number of rounds
 
 class Player:
     def __init__(self, name, animal_name, difficulty):
@@ -187,24 +190,40 @@ def create_window():
     root.geometry('700x600')
 
     #img = Image.open('./desert-museum-photo.jpg').convert('RGBA')
-    img = Image.open('./Desert Museum Announcement.png').convert('RGBA')
+    img = Image.open('./pricklypear.jpg').convert('RGBA')
+    img = img.resize((800, 1200));
     img = ImageTk.PhotoImage(image=img, master=root)
 
     img_label = Label(root, image=img)
     img_label.place(x=0, y=0, relheight=1, relwidth=1)
 
-    start_button = Button(text='Start Game!', command=lambda:[root.destroy(), start_round()])
+    start_button = Button(text='Start Game!', command=lambda:[root.destroy(), start_round(0)])
     start_button.place(relx=0.5, rely=0.5, anchor=CENTER)
 
     root.mainloop()
 
 
-def start_round():
+def start_round(n, player):
+    if n == MAX_ROUNDS:
+        # end game sequence
+        win_sequence(player)
+        return
     root1 = Tk()
-    root1.title('')
+    root1.title('Round '+ str(n))
+
 
     root1.mainloop()
 
+def outcome(n, player):
+    start_round(n+1)        # advance to next round
+    return
+
+def win_sequence(player):
+
+    return
+
+def lose_sequence(player):
+    return
 
 create_window()
 
