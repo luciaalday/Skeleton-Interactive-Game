@@ -26,32 +26,33 @@ class Player:
         self.name = name
         self.difficulty = difficulty
         self.animal_name = animal_name
+        self.points = 0
     
     def set_vals(self):
-        if self.animal_name == "snake":
-            self.animal = Animal("snake")
+        if self.animal_name == "Rattlesnake":
+            self.animal = Animal("Rattlenake")
             self.events = self.animal.build_snake_events() # events are TBD
-        elif self.animal_name == "owl":
-            imagepath = '' # filename for photo is TBD
-            self.animal = Animal("owl", imagepath)
+        elif self.animal_name == "Owl":
+            imagepath = ''
+            self.animal = Animal("Owl", imagepath)
             self.events = self.animal.build_owl_events()
-        elif self.animal_name == "coyote":
+        elif self.animal_name == "Coyote":
             imagepath = ''
-            self.animal = Animal("coyote", imagepath)
+            self.animal = Animal("Coyote", imagepath)
             self.events = self.animal.build_coyote_events()
-        elif self.animal_name == "scorpion":
+        elif self.animal_name == "Scorpion":
             imagepath = ''
-            self.animal = Animal("scorpion", imagepath)
+            self.animal = Animal("Scorpion", imagepath)
             self.events = self.animal.build_scorpion_events()
-        elif self.animal_name == "javelina":
+        elif self.animal_name == "Javelina":
             imagepath = ''
-            self.animal = Animal("javelina", imagepath)
+            self.animal = Animal("Javelina", imagepath)
             self.events = self.animal.build_javelina_events()
         
-        if self.difficulty == "easy":
+        if self.difficulty == "Easy":
             self.max_health = 500
             self.health = 500
-        elif self.difficulty == "medium":
+        elif self.difficulty == "Medium":
             self.max_health = 400
             self.health = 400
         else:
@@ -68,7 +69,7 @@ class Player:
         - if health equals 0, they lose a life and health resets
         '''
         if outcome:
-            self.health += severity
+            self.points += severity
         else:
             self.health -= severity
     
@@ -212,21 +213,21 @@ def create_window():
     animal_select.grid(row=1, column=0, padx=20, pady=20)
 
     animal_entry = StringVar()
-    animal_entry.set('owl')
+    animal_entry.set('Owl')
     # owl
-    owl_entry = Radiobutton(root, text='Owl', variable=animal_entry, value='owl')
+    owl_entry = Radiobutton(root, text='Owl', variable=animal_entry, value='Owl')
     owl_entry.grid(row=2, column=0, sticky='w', padx=20)
     # rattlesnake
-    snake_entry = Radiobutton(root, text='Rattlesnake', variable=animal_entry, value='snake')
+    snake_entry = Radiobutton(root, text='Rattlesnake', variable=animal_entry, value='Rattlesnake')
     snake_entry.grid(row=3, column=0, sticky='w', padx=20)
     # javalina
-    javalina_entry = Radiobutton(root, text='Javalina', variable=animal_entry, value='javalina')
+    javalina_entry = Radiobutton(root, text='Javalina', variable=animal_entry, value='Javalina')
     javalina_entry.grid(row=4, column=0, sticky='w', padx=20)
     # coyote
-    coyote_entry = Radiobutton(root, text='Coyote', variable=animal_entry, value='coyote')
+    coyote_entry = Radiobutton(root, text='Coyote', variable=animal_entry, value='Coyote')
     coyote_entry.grid(row=5, column=0, sticky='w', padx=20)
     # scorpion
-    scorpion_entry = Radiobutton(root, text='Scorpion', variable=animal_entry, value='scorpion')
+    scorpion_entry = Radiobutton(root, text='Scorpion', variable=animal_entry, value='Scorpion')
     scorpion_entry.grid(row=6, column=0, sticky='w', padx=20)
 
     # difficulty
@@ -252,25 +253,31 @@ def create_window():
             PLAYER.name = 'Kiddo'
         else:
             PLAYER.name = name_entry.get()
-        PLAYER.animal = animal_entry.get()
+        PLAYER.animal_name = animal_entry.get()
         PLAYER.difficulty = difficulty_entry.get()
 
     # start
-    start_button = Button(text='Start Game!', command=lambda:[collect_info(), PLAYER.set_vals(), root.destroy(), show_selections()])
+    start_button = Button(text='Start Game!', command=lambda:[collect_info(), PLAYER.set_vals(), root.destroy(), show_stats()])
     start_button.grid(row=7, column=1, pady=50, padx=100)
 
     root.mainloop()
 
-def show_selections():
+def show_stats():
     root2 = Tk()
-    root2.title('Start Game?')
+    root2.title('Player Stats')
     root2.geometry('300x300')
 
     # show selection
-    name_label = Label(root2, text=PLAYER.name)
-    name_label.grid(column=0, row=0, padx=50, pady=50)
+    animal_label = Label(root2, text=(PLAYER.animal_name+' '+PLAYER.name))
+    animal_label.grid(column=0, row=1, padx=50, pady=20, sticky='ew')
 
-    continue_button = Button(text='Continue', command=lambda:start_round(0))
+    health_label = Label(root2, text=(PLAYER.lives+' lives remaining'))
+    health_label.grid(column=0, row=2, padx=50, pady=20, sticky='ew')
+
+    points_label = Label(root2, text=(PLAYER.points+' points accrued'))
+    points_label.grid(column=0, row=3, padx=50, pady=20, sticky='ew')
+
+    continue_button = Button(root2, text='Continue', command=lambda:start_round(0))
     continue_button.grid(column=0, row=6, padx=60, pady=60)
 
     root2.mainloop()
