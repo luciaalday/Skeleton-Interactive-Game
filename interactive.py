@@ -1,4 +1,6 @@
-#interactive game
+# interactive game
+# authors: lucia Alday and Emily lastnamehere
+# last modified: 3/17/2025
 
 import tkinter as tk
 from tkinter import *
