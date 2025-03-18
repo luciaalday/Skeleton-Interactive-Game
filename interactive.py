@@ -316,9 +316,29 @@ def outcome(n):
     return
 
 def win_sequence():
+    root4 = Tk()
+    root4.title('You win!')
+    root4.geometry('300x300')
+
+    # show animal background image
+    img2 = Image.open('./sunset.jpg').convert('RGBA')
+    img2.thumbnail((500, 500))
+    img2 = ImageTk.PhotoImage(image=img2, master=root4)
+    img_label = Label(root4, image=img2)
+    img_label.place(x=0, y=0, relheight=1, relwidth=1)
     return
 
 def lose_sequence():
+    root5 = Tk()
+    root5.title('You lost :(')
+    root5.geometry('300x300')
+
+    # show animal background image
+    img2 = Image.open('./lightning.png').convert('RGBA')
+    img2.thumbnail((500, 500))
+    img2 = ImageTk.PhotoImage(image=img2, master=root5)
+    img_label = Label(root5, image=img2)
+    img_label.place(x=0, y=0, relheight=1, relwidth=1)
     return
 
 create_window()
