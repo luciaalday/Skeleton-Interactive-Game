@@ -15,7 +15,11 @@ OWL_EVENTS = {}
 COYOTE_EVENTS = {}
 SCORPION_EVENTS = {}
 JAVELINA_EVENTS = {}
-MAX_ROUNDS = 6      # number of rounds
+
+EASY_MAX = 600
+MED_MAX = 450
+HARD_MAX = 300
+MAX_ROUNDS = 3      # number of rounds
 
 
 class Player:
@@ -53,14 +57,14 @@ class Player:
             self.events = self.animal.build_javelina_events()
         
         if self.difficulty == "Easy":
-            self.max_health = 500
-            self.health = 500
+            self.max_health = EASY_MAX
+            self.health = EASY_MAX
         elif self.difficulty == "Medium":
-            self.max_health = 400
-            self.health = 400
+            self.max_health = MED_MAX
+            self.health = MED_MAX
         else:
-            self.max_health = 300
-            self.health = 300
+            self.max_health = HARD_MAX
+            self.health = HARD_MAX
         
         self.lives = 3
 
@@ -253,7 +257,7 @@ def create_window():
     # collect input info
     def collect_info():
         if name_entry.get()=='':
-            PLAYER.name = 'Kiddo'
+            PLAYER.name = 'Kid'
         else:
             PLAYER.name = name_entry.get()
         PLAYER.animal_name = animal_entry.get()
@@ -298,6 +302,9 @@ def start_round(n):
         # end game sequence
         win_sequence()
         return
+    if PLAYER.is_dead():
+        lose_sequence()
+        return
     root1 = Tk()
     root1.title('Round '+ str(n+1))
     root1.geometry('700x600')
@@ -309,7 +316,6 @@ def outcome(n):
     return
 
 def win_sequence():
-
     return
 
 def lose_sequence():
