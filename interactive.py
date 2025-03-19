@@ -6,9 +6,9 @@ import tkinter as tk
 from tkinter import *
 from PIL import Image, ImageTk
 
-EASY_MAX = 500
-MED_MAX = 400
-HARD_MAX = 300
+EASY_MAX = 200
+MED_MAX = 100
+HARD_MAX = 50
 MAX_ROUNDS = 3      # number of rounds
 
 
@@ -129,7 +129,7 @@ class Animal:
         events = []
         events.append(Event('A storm is brewing. Do you', 120, ['Slither home', 'Hide in a nearby hole', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you\nand you so far outpace it', 'Another snake was home\nand chased you out', 'The storm came nearer and\nyou had no choice but to run'],[True, False, False]))
         events.append(Event('You hear distant rumbling. Do you', 240, ['Keep going home', 'Hide in underground until\nyou figure out what it is', 'Stay still and listen'], ['Running javalinas caught\nup and ran over you', 'Javalinas run over your hiding spot, but you\'re safe', 'You got run over by javalina'],[False, True, False]))
-        events.append(Event('Lightning strikes nearby. Do you', 350, ['Shelter by the tallest cactus around', 'Go under the leaves of a dense bush', 'Ignore it and go faster'], ['Another strike hits the\ncactus and you get hurt', 'The next strike hits a nearby\ncactus but you are sheltered', 'The next strike hits a nearby cactus\nand you get hit by incoming debris'],[True, False, False]))
+        events.append(Event('Lightning strikes nearby. Do you', 350, ['Shelter by the tallest cactus around', 'Go under the leaves of a dense bush', 'Ignore it and go faster'], ['Another strike hits the\ncactus and you get hurt', 'The next strike hits a nearby\ncactus but you are sheltered', 'The next strike hits a nearby cactus\nand you get hit by incoming debris'],[False, True, False]))
         
         return events
 
@@ -341,7 +341,7 @@ def start_round(n):
 def outcome(n, curr_event, option):
     PLAYER.event_outcome(curr_event.win_condition[option], curr_event.severity)
     if PLAYER.lose_life():
-        show_stats(n+1, curr_event.outcomes[option]+' and you lost a life')
+        show_stats(n+1, curr_event.outcomes[option]+'.\nYou lost a life')
         return
 
     show_stats(n+1, curr_event.outcomes[option])        # advance to next round
