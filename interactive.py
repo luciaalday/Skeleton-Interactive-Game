@@ -1,5 +1,5 @@
 # interactive game
-# authors: lucia Alday and Emily lastnamehere
+# authors: lucia Alday and Emily Bauman
 # last modified: 3/17/2025
 
 import tkinter as tk
@@ -164,7 +164,7 @@ class Animal:
         return events
 
 class Event:
-    def __init__(self, event_name, severity):
+    def __init__(self, event_name='', severity=0):
         '''
         event_name: the string for the description of the event
         severity: how many health points the player will win or lose if the event is completed
@@ -192,8 +192,6 @@ class Event:
         phrase += self.event_name + "\n"
         phrase += "Severity: " + str(self.severity)
         return phrase
-
-# health bar shows proportions not the values, show number of lives at the bottom of the screen
 
 def create_window():
     root = Tk()
@@ -264,7 +262,7 @@ def create_window():
         PLAYER.difficulty = difficulty_entry.get()
 
     # start
-    start_button = Button(text='Start Game!', command=lambda:[collect_info(), PLAYER.set_vals(), root.destroy(), show_stats(0)])
+    start_button = Button(root, text='Start Game!', command=lambda:[collect_info(), PLAYER.set_vals(), root.destroy(), show_stats(0)])
     start_button.grid(row=7, column=1, pady=50, padx=100)
 
     root.mainloop()
@@ -299,14 +297,13 @@ def show_stats(n):
 
 def start_round(n):
     if n == MAX_ROUNDS:
-        # end game sequence
         win_sequence()
         return
     if PLAYER.is_dead():
         lose_sequence()
         return
     root1 = Tk()
-    root1.title('Round '+ str(n+1))
+    root1.title('Round '+ str(n))
     root1.geometry('700x600')
 
     root1.mainloop()
@@ -319,14 +316,20 @@ def win_sequence():
     root4 = Tk()
     root4.title('You win!')
     root4.geometry('300x300')
-
     # show animal background image
     img2 = Image.open('./sunset.jpg').convert('RGBA')
-    img2.thumbnail((500, 500))
+    img2.thumbnail((550, 550))
     img2 = ImageTk.PhotoImage(image=img2, master=root4)
     img_label = Label(root4, image=img2)
     img_label.place(x=0, y=0, relheight=1, relwidth=1)
-    return
+
+    win = Label(root4, text='Congratulations '+PLAYER.animal_name+' '+PLAYER.name+'!\nYou survived the monsoon storm with '+str(PLAYER.points)+' points!')
+    win.place(relx=0.5, rely=0.5, anchor='center')
+
+    play_again = Button(root4, text='Play Again', command=lambda:[root4.destroy(), create_window()])
+    play_again.place(relx=0.5, rely=0.7, anchor='center')
+    
+    root4.mainloop()
 
 def lose_sequence():
     root5 = Tk()
@@ -335,13 +338,21 @@ def lose_sequence():
 
     # show animal background image
     img2 = Image.open('./lightning.png').convert('RGBA')
-    img2.thumbnail((500, 500))
+    img2.thumbnail((550, 550))
     img2 = ImageTk.PhotoImage(image=img2, master=root5)
     img_label = Label(root5, image=img2)
     img_label.place(x=0, y=0, relheight=1, relwidth=1)
-    return
 
-create_window()
+    loss = Label(root5, text='Oh no '+PLAYER.animal_name+' '+PLAYER.name+'!\nThe monsoon was too strong!\nYou lost with '+str(PLAYER.points)+' points.')
+    loss.place(relx=0.5, rely=0.5, anchor='center')
+
+    play_again = Button(root5, text='Play Again', command=lambda:[root5.destroy(), create_window()])
+    play_again.place(relx=0.5, rely=0.7, anchor='center')
+    
+    root5.mainloop()
+
+win_sequence()
+#create_window()
 
 
 
