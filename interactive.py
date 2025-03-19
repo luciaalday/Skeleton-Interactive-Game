@@ -1,29 +1,19 @@
 # interactive game
-# authors: lucia Alday and Emily Bauman
+# authors: Lucia Alday and Emily Bauman
 # last modified: 3/17/2025
 
 import tkinter as tk
 from tkinter import *
 from PIL import Image, ImageTk
 
-# what if we do one list of severities so the amount is the same for each animal
-# and then we each animal with its own list of prompts
-
-# EVENTS = {"basic prompt": "severity (integer)"}
-SNAKE_EVENTS = {}
-OWL_EVENTS = {}
-COYOTE_EVENTS = {}
-SCORPION_EVENTS = {}
-JAVELINA_EVENTS = {}
-
-EASY_MAX = 600
-MED_MAX = 450
+EASY_MAX = 500
+MED_MAX = 400
 HARD_MAX = 300
 MAX_ROUNDS = 3      # number of rounds
 
 
 class Player:
-    def __init__(self, name='', animal_name='', difficulty='Easy'):
+    def __init__(self, name='', animal_name='', difficulty='Easy',  points=0):
         '''
         name: string for player name
         animal_name: name of animal player chose
@@ -32,7 +22,7 @@ class Player:
         self.name = name
         self.difficulty = difficulty
         self.animal_name = animal_name
-        self.points = 0
+        self.points = points
     
     def set_vals(self):
         if self.animal_name == "Rattlesnake":
@@ -67,6 +57,7 @@ class Player:
             self.health = HARD_MAX
         
         self.lives = 3
+        self.points = 0
 
     def event_outcome(self, outcome, severity):
         '''
@@ -110,7 +101,9 @@ class Player:
         Returns current health of the player, will be displayed as health bar
         for health and hearts for lives.
         '''
-        return self.lives, self.health
+        curr_health = round((self.health/self.max_health)*10)
+        bar = curr_health*'*' + (10-curr_health)*'_'
+        return bar
 
 PLAYER = Player()
 
@@ -134,43 +127,55 @@ class Animal:
 
     def build_snake_events(self):
         events = []
-        for key, value in SNAKE_EVENTS.items():
-            events.append(Event(key,value))
+        events.append(Event('A storm is brewing. Do you', 120, ['Slither home', 'Hide in a nearby hole', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you\nand you so far outpace it', 'Another snake was home\nand chased you out', 'The storm came nearer and\nyou had no choice but to run'],[True, False, False]))
+        events.append(Event('You hear distant rumbling. Do you', 240, ['Keep going home', 'Hide in underground until\nyou figure out what it is', 'Stay still and listen'], ['Running javalinas caught\nup and ran over you', 'Javalinas run over your hiding spot, but you\'re safe', 'You got run over by javalina'],[False, True, False]))
+        events.append(Event('Lightning strikes nearby. Do you', 350, ['Shelter by the tallest cactus around', 'Go under the leaves of a dense bush', 'Ignore it and go faster'], ['Another strike hits the\ncactus and you get hurt', 'The next strike hits a nearby\ncactus but you are sheltered', 'The next strike hits a nearby cactus\nand you get hit by incoming debris'],[True, False, False]))
+        
         return events
 
+    # change the text on events 2 and 3
     def build_owl_events(self):
         events = []
-        for key, value in OWL_EVENTS.items():
-            events.append(Event(key,value))
+        events.append(Event('A storm is brewing', 120, ['Fly home', 'Hide in a nearby nest', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you\nand you so far outpace it', 'Another owl was home\nand chased you out', 'The storm came nearer and\nyou had no choice but to fly'],[True, False, False]))
+        events.append(Event('A storm is brewing', 120, ['Slither home', 'Hide in a nearby hole', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you and you so far outpace it', 'Another snake was home and chased you out', 'The storm came nearer and you had no choice but to run'],[False, False, True]))
+        events.append(Event('A storm is brewing', 120, ['Slither home', 'Hide in a nearby hole', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you and you so far outpace it', 'Another snake was home and chased you out', 'The storm came nearer and you had no choice but to run'],[False, False, True]))
         return events
 
+    # change the text on events 2 and 3
     def build_coyote_events(self):
         events = []
-        for key, value in COYOTE_EVENTS.items():
-            events.append(Event(key,value))
+        events.append(Event('A storm is brewing', 120, ['Run home', 'Hide in a nearby burrow', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you\nand you so far outpace it', 'Another coyote was home\nand chased you out', 'The storm came nearer and\nyou had no choice but to run'],[True, False, False]))
+        events.append(Event('A storm is brewing', 120, ['Slither home', 'Hide in a nearby hole', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you and you so far outpace it', 'Another snake was home and chased you out', 'The storm came nearer and you had no choice but to run'],[False, False, True]))
+        events.append(Event('A storm is brewing', 120, ['Slither home', 'Hide in a nearby hole', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you and you so far outpace it', 'Another snake was home and chased you out', 'The storm came nearer and you had no choice but to run'],[False, False, True]))
         return events
     
+    # change the text on events 2 and 3
     def build_scorpion_events(self):
         events = []
-        for key, value in SCORPION_EVENTS.items():
-            events.append(Event(key,value))
+        events.append(Event('A storm is brewing', 120, ['Crawl home', 'Hide in a nearby hole', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you and you so far outpace it', 'A coyote was home and chased you out', 'The storm came nearer and you had no choice but to run'],[False, False, True]))
+        events.append(Event('A storm is brewing', 120, ['Slither home', 'Hide in a nearby hole', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you and you so far outpace it', 'Another snake was home and chased you out', 'The storm came nearer and you had no choice but to run'],[False, False, True]))
+        events.append(Event('A storm is brewing', 120, ['Slither home', 'Hide in a nearby hole', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you and you so far outpace it', 'Another snake was home and chased you out', 'The storm came nearer and you had no choice but to run'],[False, False, True]))
         return events
     
+    # change the text on events 2 and 3
     def build_javelina_events(self):
         events = []
-        for key, value in JAVELINA_EVENTS.items():
-            events.append(Event(key,value))
-        print("hello")
+        events.append(Event('A storm is brewing', 120, ['Run home', 'Hide in a nearby burrow', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you and you so far outpace it', 'Another scorpion was home and chased you out', 'The storm came nearer and you had no choice but to run'],[False, False, True]))
+        events.append(Event('A storm is brewing', 120, ['Slither home', 'Hide in a nearby hole', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you and you so far outpace it', 'Another snake was home and chased you out', 'The storm came nearer and you had no choice but to run'],[False, False, True]))
+        events.append(Event('A storm is brewing', 120, ['Slither home', 'Hide in a nearby hole', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you and you so far outpace it', 'Another snake was home and chased you out', 'The storm came nearer and you had no choice but to run'],[False, False, True]))
         return events
 
 class Event:
-    def __init__(self, event_name='', severity=0):
+    def __init__(self, prompt='', severity=0, options=[], outcomes=[], win_condition=[]):
         '''
         event_name: the string for the description of the event
         severity: how many health points the player will win or lose if the event is completed
         '''
-        self.event_name = event_name
+        self.prompt = prompt
         self.severity = severity
+        self.options = options
+        self.outcomes = outcomes
+        self.win_condition = win_condition
         
         # determines the difficulty of each event
         if severity <= 10:
@@ -267,31 +272,36 @@ def create_window():
 
     root.mainloop()
 
-def show_stats(n):
+def show_stats(n, result='Ready?'):
     root2 = Tk()
     root2.title('Player Stats')
-    root2.geometry('300x300')
+    root2.geometry('350x300')
 
     # show animal background image
     img2 = Image.open(PLAYER.animal.filename).convert('RGBA')
-    img2.thumbnail((500, 500))
+    img2.thumbnail((600, 600))
     img2 = ImageTk.PhotoImage(image=img2, master=root2)
     img_label = Label(root2, image=img2)
     img_label.place(x=0, y=0, relheight=1, relwidth=1)
 
-
     # show selection
+    result_label = Label(root2, text=result)
+    result_label.place(relx=0.1, rely=0.1, anchor='w')
+
     animal_label = Label(root2, text=(PLAYER.animal_name+' '+PLAYER.name))
-    animal_label.grid(column=0, row=1, padx=200, pady=20, sticky='ew')
+    animal_label.place(relx=0.8, rely=0.2, anchor='center')
 
     health_label = Label(root2, text=(str(PLAYER.lives)+' lives remaining'))
-    health_label.grid(column=0, row=2, padx=200, pady=20, sticky='ew')
+    health_label.place(relx=0.8, rely=0.3, anchor='center')
 
     points_label = Label(root2, text=(str(PLAYER.points)+' points accrued'))
-    points_label.grid(column=0, row=3, padx=200, pady=20, sticky='ew')
+    points_label.place(relx=0.8, rely=0.4, anchor='center')
 
-    continue_button = Button(root2, text='Continue', command=lambda:[root2.destroy(), start_round(n+1)])
-    continue_button.grid(column=0, row=6, padx=200, pady=60)
+    health_label = Label(root2, text='Health: '+PLAYER.current_health())
+    health_label.place(relx=0.8, rely=0.5, anchor='center')
+
+    continue_button = Button(root2, text='Continue', command=lambda:[root2.destroy(), start_round(n)])
+    continue_button.place(relx=0.8, rely=0.7, anchor='center')
 
     root2.mainloop()
 
@@ -303,8 +313,8 @@ def start_round(n):
         lose_sequence()
         return
     root1 = Tk()
-    root1.title('Round '+ str(n))
-    root1.geometry('500x300')
+    root1.title('Round '+ str(n+1))
+    root1.geometry('800x500')
     # show background image
     img2 = Image.open('./saguaros.jpg').convert('RGBA')
     img2.thumbnail((900, 900))
@@ -312,10 +322,29 @@ def start_round(n):
     img_label = Label(root1, image=img2)
     img_label.place(x=0, y=0, relheight=1, relwidth=1)
 
+    curr_event = PLAYER.events[n]
+
+    prompt = Label(root1, text=curr_event.prompt)
+    prompt.grid(row=0, column=1, sticky='ew', pady=50)
+
+    option1 = Button(root1, text=curr_event.options[0], command=lambda:[root1.destroy(), outcome(n, curr_event, 0)])
+    option1.grid(row=1, column=0, pady=300, padx=50)
+    
+    option2 = Button(root1, text=curr_event.options[1], command=lambda:[root1.destroy(), outcome(n, curr_event, 1)])
+    option2.grid(row=1, column=1, pady=300, padx=50)
+    
+    option3 = Button(root1, text=curr_event.options[2], command=lambda:[root1.destroy(), outcome(n, curr_event, 2)])
+    option3.grid(row=1, column=2, pady=300, padx=50)
+
     root1.mainloop()
 
-def outcome(n):
-    start_round(n+1)        # advance to next round
+def outcome(n, curr_event, option):
+    PLAYER.event_outcome(curr_event.win_condition[option], curr_event.severity)
+    if PLAYER.lose_life():
+        show_stats(n+1, curr_event.outcomes[option]+' and you lost a life')
+        return
+
+    show_stats(n+1, curr_event.outcomes[option])        # advance to next round
     return
 
 def win_sequence():
@@ -330,10 +359,13 @@ def win_sequence():
     img_label.place(x=0, y=0, relheight=1, relwidth=1)
 
     win = Label(root4, text='Congratulations '+PLAYER.animal_name+' '+PLAYER.name+'!\nYou survived the monsoon storm with '+str(PLAYER.points)+' points!')
-    win.place(relx=0.5, rely=0.5, anchor='center')
+    win.place(relx=0.5, rely=0.2, anchor='center')
 
     play_again = Button(root4, text='Play Again', command=lambda:[root4.destroy(), create_window()])
-    play_again.place(relx=0.5, rely=0.7, anchor='center')
+    play_again.place(relx=0.5, rely=0.4, anchor='center')
+
+    exit_button = Button(root4, text='Exit', command=lambda: root4.destroy())
+    exit_button.place(relx=0.5, rely=0.9, anchor='center')
     
     root4.mainloop()
 
@@ -358,6 +390,3 @@ def lose_sequence():
     root5.mainloop()
 
 create_window()
-
-
-
