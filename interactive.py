@@ -304,7 +304,13 @@ def start_round(n):
         return
     root1 = Tk()
     root1.title('Round '+ str(n))
-    root1.geometry('700x600')
+    root1.geometry('500x300')
+    # show background image
+    img2 = Image.open('./saguaros.jpg').convert('RGBA')
+    img2.thumbnail((900, 900))
+    img2 = ImageTk.PhotoImage(image=img2, master=root1)
+    img_label = Label(root1, image=img2)
+    img_label.place(x=0, y=0, relheight=1, relwidth=1)
 
     root1.mainloop()
 
@@ -351,8 +357,7 @@ def lose_sequence():
     
     root5.mainloop()
 
-win_sequence()
-#create_window()
+create_window()
 
 
 
