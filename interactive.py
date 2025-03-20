@@ -1,6 +1,6 @@
 # interactive game
 # authors: Lucia Alday and Emily Bauman
-# last modified: 3/17/2025
+# last modified: 3/19/2025
 
 import tkinter as tk
 from tkinter import *
@@ -28,7 +28,7 @@ class Player:
         if self.animal_name == "Rattlesnake":
             imagepath = './snake.jpg'
             self.animal = Animal("Rattlenake", imagepath)
-            self.events = self.animal.build_snake_events() # events are TBD
+            self.events = self.animal.build_snake_events()
         elif self.animal_name == "Owl":
             imagepath = './owl.jpg'
             self.animal = Animal("Owl", imagepath)
@@ -133,36 +133,32 @@ class Animal:
         
         return events
 
-    # change the text on events 2 and 3
     def build_owl_events(self):
         events = []
-        events.append(Event('A storm is brewing', 120, ['Fly home', 'Hide in a nearby nest', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you\nand you so far outpace it', 'Another owl was home\nand chased you out', 'The storm came nearer and\nyou had no choice but to fly'],[True, False, False]))
-        events.append(Event('A storm is brewing', 120, ['Slither home', 'Hide in a nearby hole', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you and you so far outpace it', 'Another snake was home and chased you out', 'The storm came nearer and you had no choice but to run'],[False, False, True]))
-        events.append(Event('A storm is brewing', 120, ['Slither home', 'Hide in a nearby hole', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you and you so far outpace it', 'Another snake was home and chased you out', 'The storm came nearer and you had no choice but to run'],[False, False, True]))
+        events.append(Event('A storm is brewing. Do you', 120, ['Fly home', 'Hide in a nearby nest', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you\nand you so far outpace it', 'Another owl was home\nand chased you out', 'The storm came nearer and\nyou had no choice but to fly'],[True, False, False]))
+        events.append(Event('You see some food nearby during the storm. Do you', 240, ['Chase after the food', 'Continue to fly away from the storm', 'Stay still and do nothing'], ['The storm caught up to you and the\nwinds start the blow you around', 'You continue to outrun the storm', 'The storm came nearer and you\nhad no choice but to fly away'],[False, True, False]))
+        events.append(Event('The storm catches up to you and heavy rain begins to fall. Do you', 350, ['Take shelter in a nearby tree', 'Keep flying through the storm', 'Look for some food. All\nthis flying has made you hungry'], ['The storm is harsh but you manage\nto stay safe in the tree', 'The heavy rains knock you down to the ground.', 'You can\'t find any food and\nthe heavy rains knowck you down'],[True, False, False]))
         return events
 
-    # change the text on events 2 and 3
     def build_coyote_events(self):
         events = []
-        events.append(Event('A storm is brewing', 120, ['Run home', 'Hide in a nearby burrow', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you\nand you so far outpace it', 'Another coyote was home\nand chased you out', 'The storm came nearer and\nyou had no choice but to run'],[True, False, False]))
-        events.append(Event('A storm is brewing', 120, ['Slither home', 'Hide in a nearby hole', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you and you so far outpace it', 'Another snake was home and chased you out', 'The storm came nearer and you had no choice but to run'],[False, False, True]))
-        events.append(Event('A storm is brewing', 120, ['Slither home', 'Hide in a nearby hole', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you and you so far outpace it', 'Another snake was home and chased you out', 'The storm came nearer and you had no choice but to run'],[False, False, True]))
+        events.append(Event('A storm is brewing. Do you', 120, ['Run home', 'Hide in a nearby burrow', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you\nand you so far outpace it', 'Another coyote was home\nand chased you out', 'The storm came nearer and\nyou had no choice but to run'],[True, False, False]))
+        events.append(Event('You see a flash of light in the distance. Do you', 240, ['Continue to run from the storm', 'Hide in a nearby cave', 'Stand near a tall cactus,\nthat should protect you.'], ['The storm is still behind you', 'A group of angry bats were inside\nand forced you to run out of the cave', 'Lightning strikes the cactus and you\nget caught in the explosion'],[True, False, False]))
+        events.append(Event('The storm eventualy catches up but you smell some food nearby. Do you', 350, ['Investigate the source of the smell', 'Stand still in the storm', 'Run to a differet cave, You\ncan\'t keep outrunning the storm.'], ['You find the food but are now\ndrenched and cold from the storm.', 'Rain pours on top of you and\nyou become cold and drenched.', 'The cave is lukcily empty and the\nstorm passes with you warm and dry.'],[False, False, True]))
         return events
     
-    # change the text on events 2 and 3
     def build_scorpion_events(self):
         events = []
-        events.append(Event('A storm is brewing', 120, ['Crawl home', 'Hide in a nearby hole', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you and you so far outpace it', 'A coyote was home and chased you out', 'The storm came nearer and you had no choice but to run'],[False, False, True]))
-        events.append(Event('A storm is brewing', 120, ['Slither home', 'Hide in a nearby hole', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you and you so far outpace it', 'Another snake was home and chased you out', 'The storm came nearer and you had no choice but to run'],[False, False, True]))
-        events.append(Event('A storm is brewing', 120, ['Slither home', 'Hide in a nearby hole', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you and you so far outpace it', 'Another snake was home and chased you out', 'The storm came nearer and you had no choice but to run'],[False, False, True]))
+        events.append(Event('A storm is brewing. Do you', 120, ['Crawl home', 'Hide in a nearby hole', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you and you so far outpace it', 'A coyote was home and chased you out', 'The storm came nearer and\nyou had no choice but to run'],[True, False, False]))
+        events.append(Event('You hear an owl nearby. Do you', 240, ['Stop to say hi. He probably\ndoesn\'t want to eat you', 'Keep running from the storm', 'Hide in a nearby cave'], ['The owl swoops down in a attempt\nto eat you forcing you\nto run for your life', 'The owl doesn\'t notice you and\nyou continue to outrun the storm.', 'Instead of an owl, a bunch of bats attempt\nto eat you you forcing you to run.'],[False, True, False]))
+        events.append(Event('The storm eventually catches up to you. Do you', 350, ['Stay out in the rain.\nIt doesn\'t bother you', 'Hide under a nearby rock', 'Keep running. Maybe you\ncan escape the rain even\nthough you\'re hungry.'], ['The rain doesn\'t bother you\nas a scorpion and you find\nsome other insects out for food.', 'The storm passes over you but\nyou\'re hungry and missed a\nprime hunting time.', 'You escape the storm but are\nnow hunrgy and can\'t find food.'],[True, False, False]))
         return events
-    
-    # change the text on events 2 and 3
+
     def build_javelina_events(self):
         events = []
-        events.append(Event('A storm is brewing', 120, ['Run home', 'Hide in a nearby burrow', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you and you so far outpace it', 'Another scorpion was home and chased you out', 'The storm came nearer and you had no choice but to run'],[False, False, True]))
-        events.append(Event('A storm is brewing', 120, ['Slither home', 'Hide in a nearby hole', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you and you so far outpace it', 'Another snake was home and chased you out', 'The storm came nearer and you had no choice but to run'],[False, False, True]))
-        events.append(Event('A storm is brewing', 120, ['Slither home', 'Hide in a nearby hole', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you and you so far outpace it', 'Another snake was home and chased you out', 'The storm came nearer and you had no choice but to run'],[False, False, True]))
+        events.append(Event('A storm is brewing. Do you', 120, ['Run home', 'Hide in a nearby burrow', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you and you so far outpace it', 'A scorpion was home and chased you out', 'The storm came nearer and\nyou had no choice but to run'],[True, False, False]))
+        events.append(Event('You see lightning in the distance. Do you', 240, ['Contunue to outrun the storm', 'Stand near a tall cactus', 'Stand still and hope the lightning\ndoesn\'t come for you'], ['The storm stays behind you and\nyou continue to outrun it.', 'Lightning strikes the cactus and\nyou get caught in the epxlosion', 'The storm and lightning caught\nup to you and you have\nno choice but to run'],[True, False, False]))
+        events.append(Event('You become tired of running and\nneed a place to rest. Do you', 350, ['Stay out in the open and\nrest on the floor', 'Run to a nearby cave', 'Lay under a nreaby tree'], ['The storm pours down on top of you\nand you become very cold and wet.', 'The cave is warm and dry and\nyou get some nice rest as the storm passes.', 'The tree is truck by lightning\nleaving you nowhere to rest.'],[False, True, False]))
         return events
 
 class Event:
