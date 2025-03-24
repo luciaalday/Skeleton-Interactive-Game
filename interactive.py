@@ -378,10 +378,13 @@ def lose_sequence():
     img_label.place(x=0, y=0, relheight=1, relwidth=1)
 
     loss = Label(root5, text='Oh no '+PLAYER.animal_name+' '+PLAYER.name+'!\nThe monsoon was too strong!\nYou lost with '+str(PLAYER.points)+' points.')
-    loss.place(relx=0.5, rely=0.5, anchor='center')
+    loss.place(relx=0.5, rely=0.2, anchor='center')
 
     play_again = Button(root5, text='Play Again', command=lambda:[root5.destroy(), create_window()])
-    play_again.place(relx=0.5, rely=0.7, anchor='center')
+    play_again.place(relx=0.5, rely=0.4, anchor='center')
+
+    exit_button = Button(root5, text='Exit', command=lambda: root5.destroy())
+    exit_button.place(relx=0.5, rely=0.9, anchor='center')
     
     root5.mainloop()
 
