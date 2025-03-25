@@ -130,7 +130,6 @@ class Animal:
         events.append(Event('A storm is brewing. Do you', 120, ['Slither home', 'Hide in a nearby hole', 'Stay still, maybe it won\'t notice you'], ['The storm is behind you\nand you so far outpace it', 'Another snake was home\nand chased you out', 'The storm came nearer and\nyou had no choice but to run'],[True, False, False]))
         events.append(Event('You hear distant rumbling. Do you', 240, ['Keep going home', 'Hide in underground until\nyou figure out what it is', 'Stay still and listen'], ['Running javalinas caught\nup and ran over you', 'Javalinas run over your hiding spot, but you\'re safe', 'You got run over by javalina'],[False, True, False]))
         events.append(Event('Lightning strikes nearby. Do you', 350, ['Shelter by the tallest cactus around', 'Go under the leaves of a dense bush', 'Ignore it and go faster'], ['Another strike hits the\ncactus and you get hurt', 'The next strike hits a nearby\ncactus but you are sheltered', 'The next strike hits a nearby cactus\nand you get hit by incoming debris'],[False, True, False]))
-        
         return events
 
     def build_owl_events(self):
@@ -302,11 +301,11 @@ def show_stats(n, result='Ready?'):
     root2.mainloop()
 
 def start_round(n):
-    if n == MAX_ROUNDS:
-        win_sequence()
-        return
     if PLAYER.is_dead():
         lose_sequence()
+        return
+    if n == MAX_ROUNDS:
+        win_sequence()
         return
     root1 = Tk()
     root1.title('Round '+ str(n+1))
